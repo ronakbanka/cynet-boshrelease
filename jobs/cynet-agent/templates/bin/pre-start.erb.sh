@@ -4,13 +4,13 @@ set -e # exit immediately if a simple command exits with a non-zero status
 
 CynetDirectory="/opt/Cynet/"
 CynetPackageDirectory="/var/vcap/packages/cynet-agent/"
-file="CynetEPS"
-file4="DefaultEpsConfig.ini"
+AgentBinary="CynetEPS"
+DefaultEpsConfig="DefaultEpsConfig.ini"
 
 rootGroup=root
 if [ $SUDO_USER ]; then sudoerUser=$SUDO_USER; else sudoerUser=$(/usr/bin/id -run); fi
 
-chmod a+x $CynetPackageDirectory$file
+chmod a+x $CynetPackageDirectory$AgentBinary
 
 echo "Creating folder /opt/Cynet/"
 mkdir -p $CynetDirectory
@@ -20,9 +20,9 @@ then
     exit 1;
 fi
 
-echo "success,copying $file to $CynetDirectory..."
-if [[ ! -f $CynetDirectory$file ]]; then
-  cp -p ${CynetPackageDirectory}$file $CynetDirectory$file
+echo "success,copying $AgentBinary to $CynetDirectory..."
+if [[ ! -f $CynetDirectory$AgentBinary ]]; then
+  cp -p ${CynetPackageDirectory}$AgentBinary $CynetDirectory$AgentBinary
   if [ $? -ne 0 ]
   then
       echo "error copying cyneteps to folder"
@@ -30,29 +30,29 @@ if [[ ! -f $CynetDirectory$file ]]; then
   fi
 fi
 
-echo "success,copying $file4 to $CynetDirectory..."
-if [[ ! -f $CynetDirectory$file4 ]]; then
-  cp ${CynetPackageDirectory}$file4 $CynetDirectory -p
+echo "success,copying $DefaultEpsConfig to $CynetDirectory..."
+if [[ ! -f $CynetDirectory$DefaultEpsConfig ]]; then
+  cp ${CynetPackageDirectory}$DefaultEpsConfig $CynetDirectory -p
   if [ $? -ne 0 ]
   then
-    echo "error: error copying $file4 to folder"
+    echo "error: error copying $DefaultEpsConfig to folder"
     exit 1;
   fi
 fi
 
 echo "Adjusting ownership of $CynetDirectory with all the contents to $sudoerUser:$rootGroup"
-sudo chown $sudoerUser:$rootGroup $CynetDirectory $CynetDirectory$file
+sudo chown $sudoerUser:$rootGroup $CynetDirectory $CynetDirectory$AgentBinary
 if [ $? -ne 0 ]
 then
-    echo "error adjusting  folder $CynetDirectory and $CynetDirectory$file ownership. Continue to next step."
+    echo "error adjusting  folder $CynetDirectory and $CynetDirectory$AgentBinary ownership. Continue to next step."
 fi
 
 if [ "$HasDefaultConfig" = true ]; then
-	echo "Adjusting ownership of $CynetDirectory$file4 with all the contents to $sudoerUser:$rootGroup"
-	sudo chown $sudoerUser:$rootGroup $CynetDirectory$file4
+	echo "Adjusting ownership of $CynetDirectory$DefaultEpsConfig with all the contents to $sudoerUser:$rootGroup"
+	sudo chown $sudoerUser:$rootGroup $CynetDirectory$DefaultEpsConfig
 	if [ $? -ne 0 ]
 	then
-		echo "error adjusting $CynetDirectory$file4 ownership. Continue to next step."
+		echo "error adjusting $CynetDirectory$DefaultEpsConfig ownership. Continue to next step."
 	fi
 fi
 
