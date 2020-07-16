@@ -1,0 +1,14 @@
+releases:
+- name: cynet-boshrelease
+  version: 1 
+addons:
+- name: cynet-agent-xenial
+  jobs:
+  - name: cynet-agent
+    release: cynet-boshrelease
+    properties:
+      cynet_endpoint:        ### Enter Cynet Endpoint
+  include:
+    stemcell:
+    - os: ubuntu-xenial
+

@@ -1,0 +1,16 @@
+---
+name: cynet-agent
+
+templates:
+  bin/ctl.erb: bin/ctl
+  bin/pre-start.erb.sh: bin/pre-start
+
+packages:
+  - cynet-agent
+
+properties:
+  cynet_endpoint:
+    description: This is the endpoint ip required to connect the agent to the Server
+  cynet_port:
+    description: Port number to connect to
+    default: 443

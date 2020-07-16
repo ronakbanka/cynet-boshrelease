@@ -1,0 +1,8 @@
+---
+name: cynet-agent
+
+dependencies: []
+
+files:
+  - CynetEPS
+  - DefaultEpsConfig.ini

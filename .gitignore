@@ -1,0 +1,7 @@
+blobs/
+config/
+.dev_builds/
+.final_builds/
+dev_releases
+releases/
+*.tgz

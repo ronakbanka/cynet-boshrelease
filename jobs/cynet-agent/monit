@@ -1,0 +1,4 @@
+check process cynet-agent with pidfile /var/vcap/sys/run/cynet-agent/cynet-agent.pid
+  group vcap
+  start program "/var/vcap/jobs/cynet-agent/bin/ctl start"
+  stop program "/var/vcap/jobs/cynet-agent/bin/ctl stop"

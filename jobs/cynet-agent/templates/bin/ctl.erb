@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+NAME="CynetEPS"
+RUN_DIR=/var/vcap/sys/run/cynet-agent
+LOG_DIR=/var/vcap/sys/log/cynet-agent
+PIDFILE=${RUN_DIR}/cynet-agent.pid
+CYNET_ENDPOINT="<%= p("cynet_endpoint") %>"
+CYNET_PORT="<%= p("cynet_port") %>"
+
+
+case "$1" in
+
+  start)
+    /opt/Cynet/CynetEPS ${CYNET_ENDPOINT} -port ${CYNET_PORT} -lightagent -msi &>/dev/null &
+    echo "CynetEPS scanner startup"
+
+    ps -ef | grep "CynetEPS" | grep -v "grep" | tr -s ' ' | cut -d ' ' -f2 > ${PIDFILE}
+    ;;
+
+  stop)
+    kill -9 `cat ${PIDFILE}`
+    rm -f ${PIDFILE}
+    ;;
+
+  *)
+    echo $"Usage: cynet-agent_ctl {start|stop|}"
+    exit 1
+
+esac
+exit 0
