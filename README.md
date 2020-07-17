@@ -49,6 +49,10 @@ This populates the `blobs.yml` with blob filename, filename size, and SHA
   ```
   version: 1
   ```
+  
+  ```
+  cynet_endpoint: Your Cynet endpoint IP
+  ```
 
 * Upload the bosh Release
   ```
