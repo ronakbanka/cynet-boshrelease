@@ -35,7 +35,7 @@ This populates the `blobs.yml` with blob filename, filename size, and SHA
   blobstore:
     provider: local
     options:
-      blobstore_path: /Users/bob/blobs
+      blobstore_path: /Users/bob/blobs # your local vm path of blobs folder under realease directory
 
   name: cynet-boshrelease
   ```
