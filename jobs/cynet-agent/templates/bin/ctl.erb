@@ -10,11 +10,13 @@ PIDFILE=${RUN_DIR}/cynet-agent.pid
 CYNET_ENDPOINT="<%= p("cynet_endpoint") %>"
 CYNET_PORT="<%= p("cynet_port") %>"
 
+exec 1>> $LOG_DIR/ctl.stdout.log
+exec 2>> $LOG_DIR/ctl.stderr.log
 
 case "$1" in
 
   start)
-    /opt/Cynet/CynetEPS ${CYNET_ENDPOINT} -port ${CYNET_PORT} -lightagent -msi &>/dev/null &
+    /opt/Cynet/CynetEPS ${CYNET_ENDPOINT} -port ${CYNET_PORT} -lightagent -msi &
     echo "CynetEPS scanner startup"
 
     ps -ef | grep "CynetEPS" | grep -v "grep" | tr -s ' ' | cut -d ' ' -f2 > ${PIDFILE}
